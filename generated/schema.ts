@@ -79,7 +79,7 @@ export class DailyBond extends Entity {
   }
 }
 
-export class Ohmie extends Entity {
+export class Templar extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
@@ -87,17 +87,17 @@ export class Ohmie extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(id !== null, "Cannot save Ohmie entity without an ID");
+    assert(id !== null, "Cannot save Templar entity without an ID");
     assert(
       id.kind == ValueKind.STRING,
-      "Cannot save Ohmie entity with non-string ID. " +
+      "Cannot save Templar entity with non-string ID. " +
         'Considering using .toHex() to convert the "id" to a string.'
     );
-    store.set("Ohmie", id.toString(), this);
+    store.set("Templar", id.toString(), this);
   }
 
-  static load(id: string): Ohmie | null {
-    return store.get("Ohmie", id) as Ohmie | null;
+  static load(id: string): Templar | null {
+    return store.get("Templar", id) as Templar | null;
   }
 
   get id(): string {
@@ -181,7 +181,7 @@ export class Ohmie extends Entity {
   }
 }
 
-export class OhmieBalance extends Entity {
+export class TemplarBalance extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
@@ -189,17 +189,17 @@ export class OhmieBalance extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(id !== null, "Cannot save OhmieBalance entity without an ID");
+    assert(id !== null, "Cannot save TemplarBalance entity without an ID");
     assert(
       id.kind == ValueKind.STRING,
-      "Cannot save OhmieBalance entity with non-string ID. " +
+      "Cannot save TemplarBalance entity with non-string ID. " +
         'Considering using .toHex() to convert the "id" to a string.'
     );
-    store.set("OhmieBalance", id.toString(), this);
+    store.set("TemplarBalance", id.toString(), this);
   }
 
-  static load(id: string): OhmieBalance | null {
-    return store.get("OhmieBalance", id) as OhmieBalance | null;
+  static load(id: string): TemplarBalance | null {
+    return store.get("TemplarBalance", id) as TemplarBalance | null;
   }
 
   get id(): string {
@@ -211,31 +211,31 @@ export class OhmieBalance extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get ohmie(): string {
-    let value = this.get("ohmie");
+  get templar(): string {
+    let value = this.get("templar");
     return value.toString();
   }
 
-  set ohmie(value: string) {
-    this.set("ohmie", Value.fromString(value));
+  set templar(value: string) {
+    this.set("templar", Value.fromString(value));
   }
 
-  get sohmBalance(): BigDecimal {
-    let value = this.get("sohmBalance");
+  get ogTempleBalance(): BigDecimal {
+    let value = this.get("ogTempleBalance");
     return value.toBigDecimal();
   }
 
-  set sohmBalance(value: BigDecimal) {
-    this.set("sohmBalance", Value.fromBigDecimal(value));
+  set ogTempleBalance(value: BigDecimal) {
+    this.set("ogTempleBalance", Value.fromBigDecimal(value));
   }
 
-  get ohmBalance(): BigDecimal {
-    let value = this.get("ohmBalance");
+  get templeBalance(): BigDecimal {
+    let value = this.get("templeBalance");
     return value.toBigDecimal();
   }
 
-  set ohmBalance(value: BigDecimal) {
-    this.set("ohmBalance", Value.fromBigDecimal(value));
+  set templeBalance(value: BigDecimal) {
+    this.set("templeBalance", Value.fromBigDecimal(value));
   }
 
   get bondBalance(): BigDecimal {
@@ -339,13 +339,13 @@ export class Deposit extends Entity {
     this.set("transaction", Value.fromString(value));
   }
 
-  get ohmie(): string {
-    let value = this.get("ohmie");
+  get templar(): string {
+    let value = this.get("templar");
     return value.toString();
   }
 
-  set ohmie(value: string) {
-    this.set("ohmie", Value.fromString(value));
+  set templar(value: string) {
+    this.set("templar", Value.fromString(value));
   }
 
   get amount(): BigDecimal {
@@ -441,8 +441,8 @@ export class Redemption extends Entity {
     }
   }
 
-  get ohmie(): string | null {
-    let value = this.get("ohmie");
+  get templar(): string | null {
+    let value = this.get("templar");
     if (value === null || value.kind == ValueKind.NULL) {
       return null;
     } else {
@@ -450,11 +450,11 @@ export class Redemption extends Entity {
     }
   }
 
-  set ohmie(value: string | null) {
+  set templar(value: string | null) {
     if (value === null) {
-      this.unset("ohmie");
+      this.unset("templar");
     } else {
-      this.set("ohmie", Value.fromString(value as string));
+      this.set("templar", Value.fromString(value as string));
     }
   }
 
@@ -532,13 +532,13 @@ export class Stake extends Entity {
     this.set("transaction", Value.fromString(value));
   }
 
-  get ohmie(): string {
-    let value = this.get("ohmie");
+  get templar(): string {
+    let value = this.get("templar");
     return value.toString();
   }
 
-  set ohmie(value: string) {
-    this.set("ohmie", Value.fromString(value));
+  set templar(value: string) {
+    this.set("templar", Value.fromString(value));
   }
 
   get amount(): BigDecimal {
@@ -599,13 +599,13 @@ export class Unstake extends Entity {
     this.set("transaction", Value.fromString(value));
   }
 
-  get ohmie(): string {
-    let value = this.get("ohmie");
+  get templar(): string {
+    let value = this.get("templar");
     return value.toString();
   }
 
-  set ohmie(value: string) {
-    this.set("ohmie", Value.fromString(value));
+  set templar(value: string) {
+    this.set("templar", Value.fromString(value));
   }
 
   get amount(): BigDecimal {

@@ -20,7 +20,7 @@ import { loadOrCreateOhmieBalance } from './OhmieBalances'
 import { toDecimal } from './Decimals'
 import { getOHMUSDRate } from './Price'
 import { loadOrCreateContractInfo } from './ContractInfo'
-import { getHolderAux } from './Aux'
+import { getHolderAux } from './Extra'
 
 export function loadOrCreateOHMie(addres: Address): Ohmie{
     let ohmie = Ohmie.load(addres.toHex())
@@ -115,7 +115,7 @@ export function updateOhmieBalance(ohmie: Ohmie, transaction: Transaction): void
             binfo.amount = pending_bond
             binfo.save()
             bonds.push(binfo.id)
-            
+
             log.debug("Ohmie {} pending OHMDAIBondV2 V1 {} on tx {}", [ohmie.id, toDecimal(pending.value1, 9).toString(), transaction.id])
         }
     }

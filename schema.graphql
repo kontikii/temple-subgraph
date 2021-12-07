@@ -6,22 +6,22 @@ type DailyBond @entity {
   value: BigDecimal!
 }
 
-type Ohmie @entity {
+type Templar @entity {
   id: ID!
-  bondDeposits: [Deposit!]! @derivedFrom(field: "ohmie")
-  bondRedemptions: [Redemption!]! @derivedFrom(field: "ohmie")
-  stakeTransactions: [Stake!]! @derivedFrom(field: "ohmie")
-  unstakeTransactions: [Unstake!]! @derivedFrom(field: "ohmie")
-  historicBalance: [OhmieBalance!]! @derivedFrom(field: "ohmie")
-  lastBalance: OhmieBalance
+  bondDeposits: [Deposit!]! @derivedFrom(field: "templar")
+  bondRedemptions: [Redemption!]! @derivedFrom(field: "templar")
+  stakeTransactions: [Stake!]! @derivedFrom(field: "templar")
+  unstakeTransactions: [Unstake!]! @derivedFrom(field: "templar")
+  historicBalance: [TemplarBalance!]! @derivedFrom(field: "templar")
+  lastBalance: TemplarBalance
   active: Boolean!
 }
 
-type OhmieBalance @entity {
+type TemplarBalance @entity {
   id: ID!
-  ohmie: Ohmie!
-  sohmBalance: BigDecimal!
-  ohmBalance: BigDecimal!
+  templar: Templar!
+  ogTempleBalance: BigDecimal!
+  templeBalance: BigDecimal!
   bondBalance: BigDecimal!
   dollarBalance: BigDecimal!
   stakes: [ContractInfo!]
@@ -32,7 +32,7 @@ type OhmieBalance @entity {
 type Deposit @entity {
   id: ID!
   transaction: Transaction!
-  ohmie: Ohmie!
+  templar: Templar!
   amount: BigDecimal!
   maxPremium: BigDecimal!
   token: Token!
@@ -43,7 +43,7 @@ type Deposit @entity {
 type Redemption @entity {
   id: ID!
   transaction: Transaction
-  ohmie: Ohmie
+  templar: Templar
   token: Token
   timestamp: BigInt
 }
@@ -51,7 +51,7 @@ type Redemption @entity {
 type Stake @entity {
   id: ID!
   transaction: Transaction!
-  ohmie: Ohmie!
+  templar: Templar!
   amount: BigDecimal!
   timestamp: BigInt!
 }
@@ -59,7 +59,7 @@ type Stake @entity {
 type Unstake @entity {
   id: ID!
   transaction: Transaction!
-  ohmie: Ohmie!
+  templar: Templar!
   amount: BigDecimal!
   timestamp: BigInt!
 }
