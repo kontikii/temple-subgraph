@@ -15,7 +15,7 @@ import { AAVE_ALLOCATOR, ADAI_ERC20_CONTRACT, CIRCULATING_SUPPLY_CONTRACT, CIRCU
 import { dayFromTimestamp } from './Dates';
 import { toDecimal } from './Decimals';
 import { getOHMUSDRate, getDiscountedPairUSD, getPairUSD, getXsushiUSDRate, getETHUSDRate, getPairWETH, getCVXUSDRate } from './Price';
-import { getHolderAux } from './Aux';
+import { getHolderAux } from './Extra';
 import { updateBondDiscounts } from './BondDiscounts';
 
 export function loadOrCreateProtocolMetric(timestamp: BigInt): ProtocolMetric{
@@ -83,12 +83,12 @@ function getSohmSupply(transaction: Transaction): BigDecimal{
 
     let sohm_contract_v1 = sOlympusERC20.bind(Address.fromString(SOHM_ERC20_CONTRACT))
     sohm_supply = toDecimal(sohm_contract_v1.circulatingSupply(), 9)
-    
+
     if(transaction.blockNumber.gt(BigInt.fromString(SOHM_ERC20_CONTRACTV2_BLOCK))){
         let sohm_contract_v2 = sOlympusERC20V2.bind(Address.fromString(SOHM_ERC20_CONTRACTV2))
         sohm_supply = sohm_supply.plus(toDecimal(sohm_contract_v2.circulatingSupply(), 9))
     }
-    
+
     log.debug("sOHM Supply {}", [sohm_supply.toString()])
     return sohm_supply
 }
@@ -117,7 +117,7 @@ function getMV_RFV(transaction: Transaction): BigDecimal[]{
     let fraxBalance = fraxERC20.balanceOf(Address.fromString(treasury_address))
     let xSushiBalance = xSushiERC20.balanceOf(Address.fromString(treasury_address))
     let xSushi_value = toDecimal(xSushiBalance, 18).times(getXsushiUSDRate())
-    
+
     let cvx_value = BigDecimal.fromString("0")
 
     let cvxERC20 = ERC20.bind(Address.fromString(CVX_ERC20_CONTRACT))
@@ -232,7 +232,7 @@ function getMV_RFV(transaction: Transaction): BigDecimal[]{
     log.debug("Convex Allocator {}", [toDecimal(convexrfv, 18).toString()])
 
     return [
-        mv, 
+        mv,
         rfv,
         // treasuryDaiRiskFreeValue = DAI RFV * DAI + aDAI
         ohmdai_rfv.plus(toDecimal(daiBalance, 18)).plus(toDecimal(adaiBalance, 18)),
@@ -259,14 +259,14 @@ function getMV_RFV(transaction: Transaction): BigDecimal[]{
 function getNextOHMRebase(transaction: Transaction): BigDecimal{
     let next_distribution = BigDecimal.fromString("0")
 
-    let staking_contract_v1 = OlympusStakingV1.bind(Address.fromString(STAKING_CONTRACT_V1))   
+    let staking_contract_v1 = OlympusStakingV1.bind(Address.fromString(STAKING_CONTRACT_V1))
     let response = staking_contract_v1.try_ohmToDistributeNextEpoch()
     if(response.reverted==false){
         next_distribution = toDecimal(response.value,9)
         log.debug("next_distribution v1 {}", [next_distribution.toString()])
     }
     else{
-        log.debug("reverted staking_contract_v1", []) 
+        log.debug("reverted staking_contract_v1", [])
     }
 
     if(transaction.blockNumber.gt(BigInt.fromString(STAKING_CONTRACT_V2_BLOCK))){
@@ -395,8 +395,8 @@ export function updateProtocolMetrics(transaction: Transaction): void{
 
     //Holders
     pm.holders = getHolderAux().value
-    
+
     pm.save()
-    
+
     updateBondDiscounts(transaction)
 }

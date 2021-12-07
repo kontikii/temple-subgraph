@@ -1,13 +1,13 @@
 {
-  "name": "olympus-subgraph",
+  "name": "temple-balances-subgraph",
   "version": "0.1.0",
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
-    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ olympus",
-    "create-local": "graph create --node http://pokt.drondin.xyz:18020/ olympus",
-    "remove-local": "graph remove --node http://pokt.drondin.xyz:18020/ olympus",
-    "deploy-local": "graph deploy --node http://pokt.drondin.xyz:18020/ --ipfs http://pokt.drondin.xyz:15001 olympus"
+    "deploy": "graph deploy --product hosted-service medariox/temple-balances",
+    "create-local": "graph create --node http://pokt.drondin.xyz:18020/ temple",
+    "remove-local": "graph remove --node http://pokt.drondin.xyz:18020/ temple",
+    "deploy-local": "graph deploy --node http://pokt.drondin.xyz:18020/ --ipfs http://pokt.drondin.xyz:15001 temple"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "^0.21.0",
